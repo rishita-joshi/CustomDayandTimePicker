@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/widget/day_selector.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1644820739904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1644820840764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,17 @@\n import 'package:flutter/material.dart';\r\n \r\n-class DaySelector extends StatefulWidget {\r\n-   DaySelector({ Key? key ,required this.labelText,required this.isDaySelected,required this.dayColorChanged}) : super(key: key);\r\n+class DaySelectorWidget extends StatefulWidget {\r\n+   DaySelectorWidget({ Key? key ,required this.labelText,required this.isDaySelected,required this.dayColorChanged}) : super(key: key);\r\n   String labelText;\r\n   bool isDaySelected;\r\n   final ValueChanged<bool> dayColorChanged;\r\n \r\n   @override\r\n   _DaySelectorState createState() => _DaySelectorState();\r\n }\r\n \r\n-class _DaySelectorState extends State<DaySelector> {\r\n+class _DaySelectorState extends State<DaySelectorWidget> {\r\n   @override\r\n   Widget build(BuildContext context) {\r\n     return InkWell(\r\n       onTap: () {\r\n"
+                },
+                {
+                    "date": 1644821232903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,10 @@\n   @override\r\n   Widget build(BuildContext context) {\r\n     return InkWell(\r\n       onTap: () {\r\n-       widget.dayColorChanged(true);\r\n+        // isDaySelected=!isDaySelected;\r\n+       widget.dayColorChanged(widget.isDaySelected=!widget.isDaySelected);\r\n       },\r\n       child: Container(\r\n         height: MediaQuery.of(context).size.height * 0.07,\r\n         width: MediaQuery.of(context).size.width * 0.07,\r\n"
+                }
+            ],
+            "date": 1644820739904,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\n\r\nclass DaySelector extends StatefulWidget {\r\n   DaySelector({ Key? key ,required this.labelText,required this.isDaySelected,required this.dayColorChanged}) : super(key: key);\r\n  String labelText;\r\n  bool isDaySelected;\r\n  final ValueChanged<bool> dayColorChanged;\r\n\r\n  @override\r\n  _DaySelectorState createState() => _DaySelectorState();\r\n}\r\n\r\nclass _DaySelectorState extends State<DaySelector> {\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return InkWell(\r\n      onTap: () {\r\n       widget.dayColorChanged(true);\r\n      },\r\n      child: Container(\r\n        height: MediaQuery.of(context).size.height * 0.07,\r\n        width: MediaQuery.of(context).size.width * 0.07,\r\n        decoration: BoxDecoration(\r\n            shape: BoxShape.circle,\r\n            color: widget.isDaySelected ? Colors.pink : Colors.grey),\r\n        child: Center(child: Text(widget.labelText)),\r\n      ),\r\n    );\r\n  }\r\n}"
+        }
+    ]
+}
