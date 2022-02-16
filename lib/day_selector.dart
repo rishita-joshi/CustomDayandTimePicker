@@ -1,6 +1,7 @@
 import 'package:clock_ui/widget/day_time_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:flutter_circular_text/circular_text.dart';
+import 'package:intl/intl.dart';
 
 class DaySelector extends StatefulWidget {
   DaySelector({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _DaySelectorState extends State<DaySelector> {
   bool isThursDaySelected = false;
   bool isFriDaySelected = false;
   bool isSaturDaySelected = false;
-  TimeOfDay initialTime = TimeOfDay.now();
+  var selectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +29,16 @@ class _DaySelectorState extends State<DaySelector> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                  onPressed: () async {
-                  await  showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                        builder: (context, child) {
-                          return MediaQuery(
-                            data: MediaQuery.of(context)
-                                .copyWith(alwaysUse24HourFormat: false),
-                            child: daySelctionMethod(),
-                              
-                            
-                          );
-                        },
-                    );
+                  onPressed: () {
+                    _selectTime(context);
+                    // final  picked_s = showTimePicker(
+                    //     context: context, initialTime: TimeOfDay.now()) as TimeOfDay ;
+                    //     print(picked_s);
+                    // if (picked_s != null && picked_s != selectedTime)
+                    //   setState(() {
+                    //     selectedTime = picked_s ;
+                    //   });
+                    //   print(selectedTime);
                   },
                   child: Text("click me")),
             ],
@@ -51,89 +48,14 @@ class _DaySelectorState extends State<DaySelector> {
     );
   }
 
-  Widget daySelctionMethod() {
-    return Column(
-      children: [
-        Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              DaySelectorWidget(
-                labelText: 'S',
-                isDaySelected: isSundaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isSundaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'M',
-                isDaySelected: isMondaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isMondaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'T',
-                isDaySelected: isTuesdaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isTuesdaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'W',
-                isDaySelected: isWednesdaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isWednesdaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'T',
-                isDaySelected: isThursDaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isThursDaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'F',
-                isDaySelected: isFriDaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isFriDaySelected = value;
-                  });
-                },
-              ),
-              DaySelectorWidget(
-                labelText: 'S',
-                isDaySelected: isSaturDaySelected,
-                dayColorChanged: (value) {
-                  setState(() {
-                    isSaturDaySelected = value;
-                  });
-                },
-              ),
-            ]),
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked_s =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (picked_s != null && picked_s != selectedTime)
+      setState(() {
+        selectedTime = picked_s;
+        print(selectedTime.toString());
+      });
 
-            //  showTimePicker(
-            //           context: context,
-            //           initialTime: TimeOfDay.now(),
-            //           builder: (context, child) {
-            //             return MediaQuery(
-            //               data: MediaQuery.of(context)
-            //                   .copyWith(alwaysUse24HourFormat: false),
-            //               child: daySelctionMethod(),
-            //             );
-            //           },
-      ],
-    );
   }
 }
