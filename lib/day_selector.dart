@@ -1,3 +1,4 @@
+import 'package:clock_ui/widget/custom_time_picker.dart';
 import 'package:clock_ui/widget/day_time_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
@@ -18,7 +19,9 @@ class _DaySelectorState extends State<DaySelector> {
   bool isThursDaySelected = false;
   bool isFriDaySelected = false;
   bool isSaturDaySelected = false;
-  var selectedTime;
+ // dynamic selectedTime = "time and day";
+  String day ="days";
+  String time = "time";
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,9 @@ class _DaySelectorState extends State<DaySelector> {
                     //   print(selectedTime);
                   },
                   child: Text("click me")),
+                  Text(day),
+                  Text(time),
+           //   Text(selectedTime),
             ],
           ),
         ),
@@ -49,13 +55,25 @@ class _DaySelectorState extends State<DaySelector> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked_s =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (picked_s != null && picked_s != selectedTime)
-      setState(() {
-        selectedTime = picked_s;
-        print(selectedTime.toString());
-      });
+    var picked_s =
+        await showDayTimePicker(context: context, initialTime: TimeOfDay.now());
+    print("picked_s $picked_s");
+    //picked_s.toString();
 
+    Map<dynamic, dynamic> result = picked_s;
+    Map<String, dynamic> data = Map<String, dynamic>();
+    for (dynamic type in result.keys) {
+      data[type.toString()] = result[type];
+      print(data['day']);
+      print(data['time']);
+     // print("Data $data");
+    }
+    setState(() {
+      day= data['day'].toString();
+      time= data['time'].toString();
+    //  selectedTime = picked_s;
+    });
+
+    // if (picked_s != null && picked_s != selectedTime)
   }
 }
